@@ -1,0 +1,161 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Crossword Numbering &#8212; My Projects v0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Demonstrating Partial Order Relations in students’ marks" href="PartialOrderRelations.html" />
+    <link rel="prev" title="PGN Parser" href="PGNParser.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="PartialOrderRelations.html" title="Demonstrating Partial Order Relations in students’ marks"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="PGNParser.html" title="PGN Parser"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">My Projects v0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="crossword-numbering">
+<h1>Crossword Numbering<a class="headerlink" href="#crossword-numbering" title="Permalink to this headline">¶</a></h1>
+<p>Love solving a crossword puzzle?</p>
+<p>This application takes a crossword grid without numbering and assigns the number to each cell.</p>
+<img alt="_images/crossword.jpeg" src="_images/crossword.jpeg" />
+<p>This application uses the pattern used by <em>The Hindu</em> to number their crossword grids in order to give a numbered crossword grid.</p>
+<div class="section" id="main-abstraction">
+<h2>Main Abstraction<a class="headerlink" href="#main-abstraction" title="Permalink to this headline">¶</a></h2>
+<p>The underlying abstraction in the problem is that a particular cell can be numbered only if it’s left and right neighbours are black or the above and below neighbours are black.</p>
+</div>
+<div class="section" id="eccentricities-of-the-problem">
+<h2>Eccentricities of the problem<a class="headerlink" href="#eccentricities-of-the-problem" title="Permalink to this headline">¶</a></h2>
+<p>The following are some eccetricities I noticed in the problem.</p>
+<div class="section" id="implementing-the-underlying-abstraction">
+<h3>Implementing the underlying abstraction.<a class="headerlink" href="#implementing-the-underlying-abstraction" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>My application checks this condition using isClue() function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">isClue</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">grid</span><span class="p">[</span><span class="n">col</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#__&#39;</span> <span class="ow">or</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">+</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">+</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#__&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="modelling-the-crossword-grid">
+<h3>Modelling the crossword grid<a class="headerlink" href="#modelling-the-crossword-grid" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>I have modelled the crossword grid as a list of list or a matrix.</p>
+<ul class="simple">
+<li>The black squares are denoted by ‘#’.</li>
+<li>The white squares are denoted by ‘_’.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="handling-the-edge-cases">
+<h3>Handling the edge cases<a class="headerlink" href="#handling-the-edge-cases" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>The edge cases form the numbering of the first and the last row of the crossword grid. Instead of handling it separately, we add <em>sentinnels</em> to the ends. This helps us generalize the abstraction across all cells in the grid.</div></blockquote>
+</div>
+</div>
+<div class="section" id="to-sum-up">
+<h2>To sum up..<a class="headerlink" href="#to-sum-up" title="Permalink to this headline">¶</a></h2>
+<p>To view the code for the problem fork this <a class="reference external" href="https://github.com/Vaibhavi1707/Crossword">repository</a>.</p>
+<p>Take the numbered grid given as an output and use it to challenge your friends!!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Crossword Numbering</a><ul>
+<li><a class="reference internal" href="#main-abstraction">Main Abstraction</a></li>
+<li><a class="reference internal" href="#eccentricities-of-the-problem">Eccentricities of the problem</a><ul>
+<li><a class="reference internal" href="#implementing-the-underlying-abstraction">Implementing the underlying abstraction.</a></li>
+<li><a class="reference internal" href="#modelling-the-crossword-grid">Modelling the crossword grid</a></li>
+<li><a class="reference internal" href="#handling-the-edge-cases">Handling the edge cases</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#to-sum-up">To sum up..</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="PGNParser.html"
+                        title="previous chapter">PGN Parser</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="PartialOrderRelations.html"
+                        title="next chapter">Demonstrating Partial Order Relations in students’ marks</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/TheHinduCrossword.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="PartialOrderRelations.html" title="Demonstrating Partial Order Relations in students’ marks"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="PGNParser.html" title="PGN Parser"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">My Projects v0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Vaibhavi Lokegaonkar.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

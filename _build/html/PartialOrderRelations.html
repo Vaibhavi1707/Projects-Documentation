@@ -1,0 +1,143 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Demonstrating Partial Order Relations in students’ marks &#8212; My Projects v0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Crossword Numbering" href="TheHinduCrossword.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="TheHinduCrossword.html" title="Crossword Numbering"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">My Projects v0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="demonstrating-partial-order-relations-in-students-marks">
+<h1>Demonstrating Partial Order Relations in students’ marks<a class="headerlink" href="#demonstrating-partial-order-relations-in-students-marks" title="Permalink to this headline">¶</a></h1>
+<p>This application gives the ranking of a class of students based on their marks in each subject.</p>
+<div class="section" id="file-format">
+<h2>File format<a class="headerlink" href="#file-format" title="Permalink to this headline">¶</a></h2>
+<p>It takes a file which contains the marks of students in the following manner :</p>
+<img alt="_images/marks.png" src="_images/marks.png" />
+<p>It rates a particular student better than another only if he/she has scored more marks than the latter in all subjects. If he secured all marks less than the latter, the latter is rated as better.</p>
+</div>
+<div class="section" id="transitivity-in-the-relationship">
+<h2>Transitivity in the relationship<a class="headerlink" href="#transitivity-in-the-relationship" title="Permalink to this headline">¶</a></h2>
+<p>This relationship is transitive i.e if A ‘is better than’ B and B ‘is better than’ C, then A ‘is better than’ C.
+To state the relation mathematically:</p>
+<p>If A &gt; B and B &gt; C, then A &gt; C.</p>
+<p>To maintain the transitivity, we find the pair of students who have other students between them in ranking and delete such pairs. Thus, our final list only consists of pairs who are immediately after one another.</p>
+</div>
+<div class="section" id="partial-order-relations">
+<h2>Partial Order Relations<a class="headerlink" href="#partial-order-relations" title="Permalink to this headline">¶</a></h2>
+<p>If a particular student has some marks (not all) greater than another student, then there is no relationship between the 2 students.</p>
+<p>The application maintains both the transitive and partial order property in the marks of students.</p>
+<p>Since we are using graphs to show the partial relationship, such pairs also belong to the list and are finally arranged by the create_png().</p>
+</div>
+<div class="section" id="representing-the-partial-order-relations">
+<h2>Representing the Partial Order Relations<a class="headerlink" href="#representing-the-partial-order-relations" title="Permalink to this headline">¶</a></h2>
+<p>The application represents these relationships using a graph, wherein all the vertices are students. In this graph 2 vertices form an edge only if there is a relationship between the 2 students’ marks. It is a directed graph where the better student is directed towards the other student.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that, this graph may not be a connected graph i.e it may have more than 1 connected component. This is from the fact that 2 vertices are only connected if there is a relationship betweeen them.</p>
+</div>
+<p>There can be a cycle in the graph i.e if a student is related 2 other students.</p>
+<img alt="_images/cycle_graph.png" src="_images/cycle_graph.png" />
+<p>I have used Graphviz as a tool to visualize the graphs as an output.</p>
+<p>The graph for the above file is:</p>
+<img alt="_images/graph.png" src="_images/graph.png" />
+</div>
+<div class="section" id="to-sum-up">
+<h2>To sum up..<a class="headerlink" href="#to-sum-up" title="Permalink to this headline">¶</a></h2>
+<p>To see the code fork this <a class="reference external" href="https://github.com/Vaibhavi1707/Partial-Order-Relations">repository</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Demonstrating Partial Order Relations in students’ marks</a><ul>
+<li><a class="reference internal" href="#file-format">File format</a></li>
+<li><a class="reference internal" href="#transitivity-in-the-relationship">Transitivity in the relationship</a></li>
+<li><a class="reference internal" href="#partial-order-relations">Partial Order Relations</a></li>
+<li><a class="reference internal" href="#representing-the-partial-order-relations">Representing the Partial Order Relations</a></li>
+<li><a class="reference internal" href="#to-sum-up">To sum up..</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="TheHinduCrossword.html"
+                        title="previous chapter">Crossword Numbering</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/PartialOrderRelations.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="TheHinduCrossword.html" title="Crossword Numbering"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">My Projects v0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Vaibhavi Lokegaonkar.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>

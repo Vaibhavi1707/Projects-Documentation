@@ -1,0 +1,189 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>PGN Parser &#8212; My Projects v0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Crossword Numbering" href="TheHinduCrossword.html" />
+    <link rel="prev" title="Welcome to Vaibhavi’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="TheHinduCrossword.html" title="Crossword Numbering"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Vaibhavi’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">My Projects v0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pgn-parser">
+<h1>PGN Parser<a class="headerlink" href="#pgn-parser" title="Permalink to this headline">¶</a></h1>
+<p>For all the chess fans!!</p>
+<p>I have developed an application which reads a pgn file and produces the final position on the chessboard.</p>
+<img alt="_images/board.jpeg" src="_images/board.jpeg" />
+<div class="section" id="what-is-a-pgn-file">
+<h2>What is a PGN file?<a class="headerlink" href="#what-is-a-pgn-file" title="Permalink to this headline">¶</a></h2>
+<p>A PGN file is a file which contains a non-ambiguous representation of moves played during a game. This format is easily readable by computer programs and humans.
+This file contains a sequence of moves taken place during a game. It also contains the details of the game such as players, time, etc. These details head the file in the Seven Tag Roster form. Also there can be comments on the game between the moves.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Nested Comments are not allowed.</p>
+</div>
+<p>Here is a sample pgn file:</p>
+<img alt="_images/pgn.JPG" src="_images/pgn.JPG" />
+</div>
+<div class="section" id="main-idea-used">
+<h2>Main idea used<a class="headerlink" href="#main-idea-used" title="Permalink to this headline">¶</a></h2>
+<p>We read the given .pgn file and extract the list of moves. Now we separate the white and black moves and send it to the respective function. These functions update the board view i.e position on the chess board for every move and update the list of locations where the piece could possibly be present.</p>
+</div>
+<div class="section" id="eccentricities-of-the-problem">
+<h2>Eccentricities of the problem<a class="headerlink" href="#eccentricities-of-the-problem" title="Permalink to this headline">¶</a></h2>
+<p>The eccentricities of this problem are:</p>
+<div class="section" id="modelling-the-chess-board">
+<h3>Modelling the chess board<a class="headerlink" href="#modelling-the-chess-board" title="Permalink to this headline">¶</a></h3>
+<p>In my application the chess board is stored as a matrix of 8 * 8 dimensions, where each element stores whether the it is empty or the piece it has.
+Each square is accessed by the following format given by the rules of chess.</p>
+<img alt="_images/chess_board.png" src="_images/chess_board.png" />
+</div>
+<div class="section" id="reading-from-the-pgn-file">
+<h3>Reading from the PGN file<a class="headerlink" href="#reading-from-the-pgn-file" title="Permalink to this headline">¶</a></h3>
+<p>Since a pgn file has some extra details in comments and the Seven Tag Roster, I have used regular expressions to extract a list of moves.</p>
+</div>
+<div class="section" id="handling-special-moves-in-chess">
+<h3>Handling special moves in chess<a class="headerlink" href="#handling-special-moves-in-chess" title="Permalink to this headline">¶</a></h3>
+<p>There are some special moves in chess such as :</p>
+<div class="section" id="castling">
+<h4>Castling<a class="headerlink" href="#castling" title="Permalink to this headline">¶</a></h4>
+<p>Castling where the king side or the queenside rook is got to a middle square and swapped positions with the king.</p>
+<p>I have implemented a castling() to perform the move. It updates both the rook’s and king’s position on the board.</p>
+<img alt="_images/castling.gif" src="_images/castling.gif" />
+</div>
+<div class="section" id="enpassant-pawn-capture">
+<h4>Enpassant Pawn Capture<a class="headerlink" href="#enpassant-pawn-capture" title="Permalink to this headline">¶</a></h4>
+<p>This movement is depicted by the gif shown. It occurs only when the black pawn is at e5 or the white pawn is at e4. Also the pawn to be killed must have moved 2 places just before making this move.
+I have implemented a make_empassant() to perform the move. This method updates the status of the pawn captured as well as the pawn capturing it.</p>
+<img alt="_images/enpassant.gif" src="_images/enpassant.gif" />
+</div>
+<div class="section" id="pawn-promotion">
+<h4>Pawn Promotion<a class="headerlink" href="#pawn-promotion" title="Permalink to this headline">¶</a></h4>
+<p>When a pawn reaches it’s respective last rank i.e white reaches the 8th rank and black pawn reaches the 1st rank, it can upgrade to any piece the player wants. The player can choose one from the following:</p>
+<ul class="simple">
+<li>Queen</li>
+<li>Knight</li>
+<li>Bishop</li>
+<li>Rook</li>
+</ul>
+<p>The promote_pawn() does the above move. It deletes the pawn from the board and adds a position in the piece view of the piece it upgraded to.</p>
+</div>
+</div>
+</div>
+<div class="section" id="to-sum-up">
+<h2>To sum up..<a class="headerlink" href="#to-sum-up" title="Permalink to this headline">¶</a></h2>
+<p>My application accepts .pgn files and produces the corresponding final position after doing all the moves given in the file.</p>
+<p>To see the code fork this <a class="reference external" href="https://github.com/Vaibhavi1707/PGN-Parser">repository</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">PGN Parser</a><ul>
+<li><a class="reference internal" href="#what-is-a-pgn-file">What is a PGN file?</a></li>
+<li><a class="reference internal" href="#main-idea-used">Main idea used</a></li>
+<li><a class="reference internal" href="#eccentricities-of-the-problem">Eccentricities of the problem</a><ul>
+<li><a class="reference internal" href="#modelling-the-chess-board">Modelling the chess board</a></li>
+<li><a class="reference internal" href="#reading-from-the-pgn-file">Reading from the PGN file</a></li>
+<li><a class="reference internal" href="#handling-special-moves-in-chess">Handling special moves in chess</a><ul>
+<li><a class="reference internal" href="#castling">Castling</a></li>
+<li><a class="reference internal" href="#enpassant-pawn-capture">Enpassant Pawn Capture</a></li>
+<li><a class="reference internal" href="#pawn-promotion">Pawn Promotion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#to-sum-up">To sum up..</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Vaibhavi’s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="TheHinduCrossword.html"
+                        title="next chapter">Crossword Numbering</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/PGNParser.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="TheHinduCrossword.html" title="Crossword Numbering"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Vaibhavi’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">My Projects v0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, Vaibhavi Lokegaonkar.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.5.
+    </div>
+  </body>
+</html>
